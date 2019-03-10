@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+  
+before_install: 
+  - docker build -t muzmov/react-test -f ./client/Dockerfile.dev ./client
+  
+script:
+  - docker run muzmov/react-test npm test -- --coverage
+  
+after_success:
+  - docker build -t muzmov/multi-client ./client
+  - docker build -t muzmov/multi-worker ./worker
+  - docker build -t muzmov/multi-server ./server
+  - docker build -t muzmov/multi-nginx ./nginx
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push muzmov/multi-client
+  - docker push muzmov/multi-worker
+  - docker push muzmov/multi-server
+  - docker push muzmov/multi-nginx
