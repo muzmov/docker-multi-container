@@ -1,0 +1,1 @@
+# Pipeline example for multi-container docker app with Travis CI and AWS [![Build Status](https://travis-ci.org/muzmov/docker-multi-container.svg?branch=master)](https://travis-ci.org/muzmov/docker-multi-container)
